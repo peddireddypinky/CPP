@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+struct Person {
+    int personId;
+    string lastName;
+    string firstName;
+};
+
+struct Address {
+    int personId;
+    string city;
+    string state;
+};
+
+int main() {
+    // Sample Person table
+    vector<Person> persons = {
+        {1, "Wang", "Allen"},
+        {2, "Alice", "Bob"}
+    };
+
+    // Sample Address table
+    vector<Address> addresses = {
+        {2, "New York City", "New York"},
+        {3, "Leetcode", "California"}
+    };
+
+    // Create a map for quick lookup of personId → Address
+    unordered_map<int, Address> addressMap;
+    for (auto &addr : addresses) {
+        addressMap[addr.personId] = addr;
+    }
+
+    // Output result: firstName, lastName, city, state
+    for (auto &p : persons) {
+        cout << p.firstName << " "
+             << p.lastName << " ";
+
+        if (addressMap.find(p.personId) != addressMap.end()) {
+            cout << addressMap[p.personId].city << " "
+                 << addressMap[p.personId].state << endl;
+        } else {
+            cout << "NULL NULL" << endl;
+        }
+    }
+
+    return 0;
+}
